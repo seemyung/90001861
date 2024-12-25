@@ -81,7 +81,17 @@
             text-align: center;
         }
 
+        #product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
         @media (max-width: 768px) {
+            #product-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .product-card {
                 flex-direction: column;
             }
@@ -100,7 +110,7 @@
 <body>
 
     <!-- Product Cards -->
-    <div id="product-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px;">
+    <div id="product-container">
         <!-- Product Cards Generated Dynamically -->
     </div>
 

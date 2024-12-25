@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제품 주문 시스템</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            width: 40%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .product-card div {
+            flex-grow: 1;
+            padding-left: 10px;
+        }
+
+        .product-card input {
+            width: 60px;
+            margin: 0;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .action-button {
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .action-button:disabled {
+            background-color: #ccc;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .product-card {
+                flex-direction: column;
+            }
+
+            .product-card img {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-card div {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Product Cards -->
+    <div id="product-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px;">
+        <!-- Product Cards Generated Dynamically -->
+    </div>
+
+    <button class="action-button" onclick="generateTable()">주문 내역 확인</button>
+
+    <!-- Order Table -->
+    <div class="table-container" id="table-container" style="display:none;">
+        <h3>주문 내역</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>제품명</th>
+                    <th>수량</th>
+                </tr>
+            </thead>
+            <tbody id="order-table"></tbody>
+        </table>
+        <button class="action-button" onclick="copyTableToClipboard()">복사하기</button>
+        <button class="action-button" onclick="sendEmail()">이메일 전송</button>
+    </div>
+
+    <script>
+        const products = [
+            { id: 'product-1', name: '비타민D 5000IU', image: './images/product_1.png' },
+            { id: 'product-2', name: '요오드S', image: './images/product_2.png' },
+            { id: 'product-3', name: '콜라겐', image: './images/product_3.png' },
+            { id: 'product-4', name: '파워든 플러스', image: './images/product_4.png' },
+            { id: 'product-5', name: '콰트로다운 포르테', image: './images/product_5.png' },
+            { id: 'product-6', name: '엘고이지 프로테우스', image: './images/product_6.png' },
+            { id: 'product-7', name: '케토 글루포터', image: './images/product_7.png' },
+            { id: 'product-8', name: '조인트 MSM', image: './images/product_8.png' },
+            { id: 'product-9', name: '엑티브칼맥 더블액션', image: './images/product_9.png' },
+            { id: 'product-10', name: '화이버', image: './images/product_10.png' },
+            { id: 'product-11', name: '에리스아미노', image: './images/product_11.png' },
+            { id: 'product-12', name: '프로바이오500비플러스 골드', image: './images/product_12.png' },
+            { id: 'product-13', name: '프로바이오500골드', image: './images/product_13.png' },
+            { id: 'product-14', name: '아스친 알티지 오메가3', image: './images/product_14.png' },
+            { id: 'product-15', name: '트리오틱스', image: './images/product_15.png' },
+            { id: 'product-16', name: '아드파워 밸런스', image: './images/product_16.png' },
+            { id: 'product-17', name: '살리드로', image: './images/product_17.png' },
+            { id: 'product-18', name: '아르기닌', image: './images/product_18.png' },
+            { id: 'product-19', name: '메타파워칸 에스', image: './images/product_19.png' },
+            { id: 'product-20', name: '투윅스 체인지 메타', image: './images/product_20.png' },
+            { id: 'product-21', name: '투윅스 체인지 리퀴드 OPC', image: './images/product_21.png' },
+            { id: 'product-22', name: '에피-큐 듀얼액션', image: './images/product_22.png' },
+            { id: 'product-23', name: '나노 에피큐민', image: './images/product_23.png' },
+            { id: 'product-24', name: '바이오 이뮨칸', image: './images/product_24.png' },
+            { id: 'product-25', name: '바이오 베타-칸 에스', image: './images/product_25.png' },
+            { id: 'product-26', name: 'GLA40 앱솔루트', image: './images/product_26.png' },
+            { id: 'product-27', name: 'BR 펩타이드', image: './images/product_27.png' },
+            { id: 'product-28', name: '노토진생', image: './images/product_28.png' },
+            { id: 'product-29', name: '노토진생 리퀴드', image: './images/product_29.png' },
+            { id: 'product-30', name: '엽산 에프', image: './images/product_30.png' },
+            { id: 'product-31', name: '헴철G', image: './images/product_31.png' },
+            { id: 'product-32', name: '엑티브칼맥 리퀴드', image: './images/product_32.png' }
+        ];
+
+        function generateProductCards() {
+            const container = document.getElementById('product-container');
+            container.innerHTML = '';
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="제품 이미지">
+                    <div>
+                        <p>${product.name}</p>
+                        <input type="number" id="${product.id}" min="0" placeholder="수량">
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function generateTable() {
+            const tableBody = document.getElementById('order-table');
+            tableBody.innerHTML = '';
+            let hasOrder = false;
+
+            products.forEach(product => {
+                const quantity = document.getElementById(product.id).value;
+                if (quantity > 0) {
+                    hasOrder = true;
+                    const row = `<tr><td>${product.name}</td><td>${quantity}</td></tr>`;
+                    tableBody.innerHTML += row;
+                }
+            });
+
+            if (hasOrder) {
+                document.getElementById('table-container').style.display = 'block';
+            } else {
+                alert('주문한 제품이 없습니다.');
+            }
+        }
+
+        function sendEmail() {
+            const table = document.getElementById('order-table');
+            let emailBody = '';
+
+            for (let i = 0; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const productName = row.cells[0].innerText;
+                const quantity = row.cells[1].innerText;
+                emailBody += `제품명: ${productName}, 수량: ${quantity}\n`;
+            }
+
+            const email = "a01090001861@gmai.com";
+            const subject = "주문 내역";
+            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            window.location.href = mailtoLink;
+        }
+
+        function copyTableToClipboard() {
+            const table = document.getElementById('order-table');
+            let text = '제품명\t수량\n';
+
+            for (let i = 0; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const productName = row.cells[0].innerText;
+                const quantity = row.cells[1].innerText;
+                text += `${productName}\t${quantity}\n`;
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('주문 내역이 복사되었습니다.');
+            }).catch(err => {
+                console.error('복사 실패:', err);
+            });
+        }
+
+        // Initialize Product Cards on Page Load
+        window.onload = generateProductCards;
+    </script>
+
+</body>
+</html>

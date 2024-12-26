@@ -81,17 +81,7 @@
             text-align: center;
         }
 
-        #product-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 10px;
-        }
-
         @media (max-width: 768px) {
-            #product-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
             .product-card {
                 flex-direction: column;
             }
@@ -110,7 +100,7 @@
 <body>
 
     <!-- Product Cards -->
-    <div id="product-container">
+    <div id="product-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px;">
         <!-- Product Cards Generated Dynamically -->
     </div>
 
@@ -129,7 +119,7 @@
             <tbody id="order-table"></tbody>
         </table>
         <button class="action-button" onclick="copyTableToClipboard()">복사하기</button>
-        <button class="action-button" onclick="sendEmail()">이메일 전송</button>
+        <button class="action-button" onclick="sendSMS()">010-9000-1861로 문자보내기</button>
     </div>
 
     <script>
@@ -207,21 +197,20 @@
             }
         }
 
-        function sendEmail() {
+        function sendSMS() {
             const table = document.getElementById('order-table');
-            let emailBody = '';
+            let smsBody = '';
 
             for (let i = 0; i < table.rows.length; i++) {
                 const row = table.rows[i];
                 const productName = row.cells[0].innerText;
                 const quantity = row.cells[1].innerText;
-                emailBody += `제품명: ${productName}, 수량: ${quantity}\n`;
+                smsBody += `제품명: ${productName}, 수량: ${quantity}\n`;
             }
 
-            const email = "a01090001861@gmai.com";
-            const subject = "주문 내역";
-            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-            window.location.href = mailtoLink;
+            const phoneNumber = "01090001861";
+            const smsLink = `sms:${phoneNumber}?body=${encodeURIComponent(smsBody)}`;
+            window.location.href = smsLink;
         }
 
         function copyTableToClipboard() {

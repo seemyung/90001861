@@ -15,39 +15,35 @@
             justify-content: center;
         }
 
-        #product-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
         .product-card {
             border: 1px solid #ddd;
             border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
             padding: 10px;
             text-align: center;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
+            justify-content: space-between;
         }
 
         .product-card img {
             max-width: 100%;
-            width: auto;
-            height: 150px;
+            width: 40%;
+            height: auto;
             border-radius: 10px;
         }
 
         .product-card div {
-            margin-top: 10px;
+            flex-grow: 1;
+            padding-left: 10px;
         }
 
         .product-card input {
             width: 60px;
-            margin-top: 5px;
+            margin: 0;
             padding: 5px;
             text-align: center;
         }
@@ -92,11 +88,14 @@
             .product-card {
                 flex-direction: column;
             }
-        }
 
-        @media (max-width: 576px) {
-            #product-container {
-                grid-template-columns: repeat(1, 1fr);
+            .product-card img {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-card div {
+                padding-left: 0;
             }
         }
     </style>
@@ -104,7 +103,7 @@
 <body>
 
     <!-- Product Cards -->
-    <div id="product-container">
+    <div id="product-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px;">
         <!-- Product Cards Generated Dynamically -->
     </div>
 
@@ -170,7 +169,7 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name} 상세 이미지">
+                    <img src="${product.image}" alt="제품 이미지">
                     <div>
                         <p>${product.name}</p>
                         <input type="number" id="${product.id}" min="0" placeholder="수량">
@@ -199,6 +198,22 @@
             } else {
                 alert('주문한 제품이 없습니다.');
             }
+        }
+
+        function sendSMS() {
+            const table = document.getElementById('order-table');
+            let smsBody = '';
+
+            for (let i = 0; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const productName = row.cells[0].innerText;
+                const quantity = row.cells[1].innerText;
+                smsBody += `제품명: ${productName}, 수량: ${quantity}\n`;
+            }
+
+            const phoneNumber = "01090001861";
+            const smsLink = `sms:${phoneNumber}?body=${encodeURIComponent(smsBody)}`;
+            window.location.href = smsLink;
         }
 
         function copyTableToClipboard() {

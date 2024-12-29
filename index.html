@@ -123,7 +123,6 @@
         </table>
         <button class="action-button" onclick="copyTableToClipboard()">복사하기</button>
         <button class="action-button" onclick="sendSMS()">010-9000-1861로 문자보내기</button>
-        <button class="action-button" onclick="shareKakaoTalk()">카카오톡 공유하기</button>
     </div>
 
     <script>
@@ -215,20 +214,6 @@
             const phoneNumber = "01090001861";
             const smsLink = `sms:${phoneNumber}?body=${encodeURIComponent(smsBody)}`;
             window.location.href = smsLink;
-        }
-
-        function shareKakaoTalk() {
-            const table = document.getElementById('order-table');
-            let kakaoMessage = '';
-
-            for (let i = 0; i < table.rows.length; i++) {
-                const row = table.rows[i];
-                const productName = row.cells[0].innerText;
-                const quantity = row.cells[1].innerText;
-                kakaoMessage += `제품명: ${productName}, 수량: ${quantity}\n`;
-            }
-
-            alert(`카카오톡 공유 기능은 별도의 API와 연동이 필요합니다. 다음 메시지를 카카오톡으로 공유하세요:\n\n${kakaoMessage}`);
         }
 
         function copyTableToClipboard() {

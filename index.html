@@ -4,29 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>제품 주문 시스템</title>
-  <style>
-    #product-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2열로 정렬 */
-        gap: 20px;
-        width: 100%;
-        max-width: 1200px;
-    }
-
-    @media (max-width: 768px) {
-        #product-container {
-            display: grid; /* 강제로 grid 적용 */
-            grid-template-columns: repeat(2, 1fr); /* 모바일 환경에서도 2열 유지 */
-            gap: 15px;
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            justify-content: center;
         }
-    }
 
-    @media (max-width: 576px) {
-        #product-container {
-            grid-template-columns: repeat(1, 1fr); /* 1열로 정렬 */
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
         }
-    }
-</style>
+
+        .product-card img {
+            max-width: 100%;
+            width: 40%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .product-card div {
+            flex-grow: 1;
+            padding-left: 10px;
+        }
+
+        .product-card input {
+            width: 60px;
+            margin: 0;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .action-button {
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .action-button:disabled {
+            background-color: #ccc;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            #product-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .product-card {
+                flex-direction: column;
+            }
+
+            .product-card img {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-card div {
+                padding-left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
 

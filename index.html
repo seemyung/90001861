@@ -15,6 +15,16 @@
             align-items: center;
         }
 
+        .banner {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
         h3 {
             color: #333;
         }
@@ -153,6 +163,8 @@
 </head>
 <body>
 
+    <div class="banner">팜스임상영양약학회 대구지사 주문페이지</div>
+
     <!-- Product Cards -->
     <div id="product-container">
         <!-- Product Cards Generated Dynamically -->
@@ -173,7 +185,7 @@
             <tbody id="order-table"></tbody>
         </table>
         <button class="action-button" onclick="copyTableToClipboard()">복사하기</button>
-        <button class="action-button" onclick="sendSMS()">담당자에게 주문서 전송</button>
+        <button class="action-button" onclick="sendSMS()">문자 보내기</button>
     </div>
 
     <script>

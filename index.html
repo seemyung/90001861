@@ -37,70 +37,6 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
-                }
-
-        .details-button {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #007bff;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        .details-button:hover {
-            color: #0056b3;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 90%;
-            max-height: 90%;
-            overflow: auto;
-        }
-
-        .modal img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .close-button {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .close-button:hover {
-            background-color: #0056b3;
-        }
-
-        h3 {
-            color: #333;
         }
 
         #product-container {
@@ -109,6 +45,7 @@
             gap: 15px;
             width: 100%;
             max-width: 1000px;
+            margin-bottom: 100px; /* Ensure space for the fixed button */
         }
 
         .product-card {
@@ -116,17 +53,10 @@
             border-radius: 15px;
             padding: 15px;
             background: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .product-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
         }
 
         .product-card img {
@@ -134,7 +64,7 @@
             height: auto;
             border-radius: 10px;
             margin-bottom: 10px;
-            object-fit: cover;
+            cursor: pointer;
         }
 
         .product-card p {
@@ -153,7 +83,10 @@
         }
 
         .action-button {
-            margin: 20px auto;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             padding: 12px 25px;
             font-size: 16px;
             background: linear-gradient(90deg, #6a5acd, #007bff);
@@ -161,7 +94,7 @@
             border: none;
             cursor: pointer;
             border-radius: 25px;
-            display: block;
+            z-index: 1000;
             transition: background 0.3s, transform 0.2s;
         }
 
@@ -188,13 +121,11 @@
             background: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            overflow: hidden;
         }
 
         th {
             background: #007bff;
             color: white;
-            font-weight: bold;
             padding: 10px;
         }
 
@@ -207,52 +138,22 @@
         tr:nth-child(even) {
             background: #f2f2f2;
         }
-
-        tr:hover {
-            background: #e0e0e0;
-        }
-
-        @media (max-width: 768px) {
-            #product-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .action-button {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #product-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            table {
-                font-size: 14px;
-                overflow-x: scroll;
-            }
-        }
     </style>
 </head>
 <body>
 
     <div class="banner">팜스임상영양약학회 대구지사 제품주문</div>
 
-    <div class="instructions">[사용방법] <br>
-        제품수량입력 → 주문내역확인 → 담당자에게 주문서전송 → 문자보내기</div>
-    <img src="/90001861/images/image.png" alt="아침편지" style="width:100%; max-width:400px; display:block; margin:auto;">
+    <div class="instructions">[사용방법]<br>제품수량입력 → 주문내역확인 → 담당자에게 주문서전송</div>
 
-    <div class="instructions">[공지] 헴철 캡슐 제품 입고됐습니다.</div>
-    
-    <!-- Product Cards -->
     <div id="product-container">
-        <!-- Product Cards Generated Dynamically -->
+        <!-- 제품 카드가 동적으로 생성됩니다 -->
     </div>
 
+    <!-- 주문 내역 확인 버튼 -->
     <button class="action-button" onclick="generateTable()">주문 내역 확인</button>
 
-    <!-- Order Table -->
+    <!-- 주문 내역 테이블 -->
     <div class="table-container" id="table-container" style="display:none;">
         <h3>주문 내역</h3>
         <table>
@@ -269,57 +170,55 @@
 
     <script>
         const products = [
-            { id: 'product-31', name: '헴철G', image: '/90001861/images/product_31.png' },
-            { id: 'product-33', name: '헴철 캡슐', image: '/90001861/images/product_33.png' },
-            { id: 'product-30', name: '엽산 에프', image: '/90001861/images/product_30.png' },
-            { id: 'product-20', name: '투윅스 체인지 메타', image: '/90001861/images/product_20.png' },
-            { id: 'product-21', name: '투윅스 체인지 리퀴드 OPC', image: '/90001861/images/product_21.png' },
-            { id: 'product-25', name: '바이오 베타-칸 에스', image: '/90001861/images/product_25.png' },
-            { id: 'product-24', name: '바이오 이뮨칸', image: '/90001861/images/product_24.png' },
-            { id: 'product-14', name: '아스친 알티지 오메가3', image: '/90001861/images/product_14.png' },
-            { id: 'product-26', name: 'GLA40 앱솔루트', image: '/90001861/images/product_26.png' },
-            { id: 'product-28', name: '노토진생', image: '/90001861/images/product_28.png' },
-            { id: 'product-29', name: '노토진생 리퀴드', image: '/90001861/images/product_29.png' },
-            { id: 'product-5', name: '콰트로다운 포르테', image: '/90001861/images/product_5.png' },
-            { id: 'product-9', name: '엑티브칼맥 더블액션', image: '/90001861/images/product_9.png' },
-            { id: 'product-32', name: '엑티브칼맥 리퀴드', image: '/90001861/images/product_32.png' },
-            { id: 'product-23', name: '나노 에피큐민', image: '/90001861/images/product_23.png' },
-            { id: 'product-22', name: '에피-큐 듀얼액션', image: '/90001861/images/product_22.png' },
-            { id: 'product-27', name: 'BR 펩타이드', image: '/90001861/images/product_27.png' },
-            { id: 'product-11', name: '에리스아미노', image: '/90001861/images/product_11.png' },
-            { id: 'product-19', name: '메타파워칸 에스', image: '/90001861/images/product_19.png' },
-            { id: 'product-16', name: '아드파워 밸런스', image: '/90001861/images/product_16.png' },
-            { id: 'product-18', name: '아르기닌', image: '/90001861/images/product_18.png' },
-            { id: 'product-17', name: '살리드로', image: '/90001861/images/product_17.png' },
-            { id: 'product-6', name: '엘고이지 프로테우스', image: '/90001861/images/product_6.png' },
-            { id: 'product-7', name: '케토 글루포터', image: '/90001861/images/product_7.png' },
-            { id: 'product-12', name: '프로바이오500비플러스 골드', image: '/90001861/images/product_12.png' },
-            { id: 'product-13', name: '프로바이오500골드', image: '/90001861/images/product_13.png' },
-            { id: 'product-15', name: '트리오틱스', image: '/90001861/images/product_15.png' },
-            { id: 'product-10', name: '화이버', image: '/90001861/images/product_10.png' },
-            { id: 'product-4', name: '파워든 플러스', image: '/90001861/images/product_4.png' },
-            { id: 'product-8', name: '조인트 MSM', image: '/90001861/images/product_8.png' },
-            { id: 'product-3', name: '콜라겐', image: '/90001861/images/product_3.png' },
-            { id: 'product-2', name: '요오드S', image: '/90001861/images/product_2.png' },
-            { id: 'product-1', name: '비타민D 5000IU', image: '/90001861/images/product_1.png' },
-            { id: 'product-34', name: '[소포장] 엘고이지 10캡슐x10EA', image: '/90001861/images/product_34.png' },
-            { id: 'product-35', name: '[소포장] GLA 40 6캡슐x10EA', image: '/90001861/images/product_35.png' },
-            { id: 'product-36', name: '[소포장] 조인트MSM 10캡슐x10EA', image: '/90001861/images/product_36.png' }
+            { id: 'product-31', name: '헴철G', image: '/90001861/images/product_31.png', details: ['/90001861/images/product_31_detail1.png', '/90001861/images/product_31_detail2.png', '/90001861/images/product_31_detail3.png', '/90001861/images/product_31_detail4.png'] },
+            { id: 'product-33', name: '헴철 캡슐', image: '/90001861/images/product_33.png', details: ['/90001861/images/product_33_detail1.png', '/90001861/images/product_33_detail2.png'] },
+            { id: 'product-20', name: '투윅스 체인지 메타', image: '/90001861/images/product_20.png', details: ['/90001861/images/product_20_detail1.png', '/90001861/images/product_20_detail2.png'] },
+            { id: 'product-21', name: '투윅스 체인지 리퀴드 OPC', image: '/90001861/images/product_21.png', details: ['/90001861/images/product_21_detail1.png', '/90001861/images/product_21_detail2.png'] },
+            { id: 'product-25', name: '바이오 베타-칸 에스', image: '/90001861/images/product_25.png', details: ['/90001861/images/product_25_detail1.png', '/90001861/images/product_25_detail2.png', '/90001861/images/product_25_detail3.png'] },
+            { id: 'product-24', name: '바이오 이뮨칸', image: '/90001861/images/product_24.png', details: ['/90001861/images/product_24_detail1.png', '/90001861/images/product_24_detail2.png'] },
+            { id: 'product-14', name: '아스친 알티지 오메가3', image: '/90001861/images/product_14.png', details: ['/90001861/images/product_14_detail1.png', '/90001861/images/product_14_detail2.png', '/90001861/images/product_14_detail3.png', '/90001861/images/product_14_detail4.png'] },
+            { id: 'product-26', name: 'GLA40 앱솔루트', image: '/90001861/images/product_26.png', details: ['/90001861/images/product_26_detail1.png', '/90001861/images/product_26_detail2.png', '/90001861/images/product_26_detail3.png', '/90001861/images/product_26_detail4.png'] },
+            { id: 'product-9', name: '엑티브칼맥 더블액션', image: '/90001861/images/product_9.png', details: ['/90001861/images/product_9_detail1.png', '/90001861/images/product_9_detail2.png', '/90001861/images/product_9_detail3.png'] },
+            { id: 'product-32', name: '엑티브칼맥 리퀴드', image: '/90001861/images/product_32.png', details: ['/90001861/images/product_32_detail1.png', '/90001861/images/product_32_detail2.png'] },
+            { id: 'product-22', name: '에피-큐 듀얼액션', image: '/90001861/images/product_22.png', details: ['/90001861/images/product_22_detail1.png', '/90001861/images/product_22_detail2.png'] },
+            { id: 'product-23', name: '나노 에피큐민', image: '/90001861/images/product_23.png', details: ['/90001861/images/product_23_detail1.png', '/90001861/images/product_23_detail2.png', '/90001861/images/product_23_detail3.png', '/90001861/images/product_23_detail4.png'] },
+            { id: 'product-28', name: '노토진생', image: '/90001861/images/product_28.png', details: ['/90001861/images/product_28_detail1.png', '/90001861/images/product_28_detail2.png', '/90001861/images/product_28_detail3.png', '/90001861/images/product_28_detail4.png'] },
+            { id: 'product-29', name: '노토진생 리퀴드', image: '/90001861/images/product_29.png', details: ['/90001861/images/product_29_detail1.png', '/90001861/images/product_29_detail2.png', '/90001861/images/product_29_detail3.png', '/90001861/images/product_29_detail4.png'] },
+            { id: 'product-5', name: '콰트로다운 포르테', image: '/90001861/images/product_5.png', details: ['/90001861/images/product_5_detail1.png', '/90001861/images/product_5_detail2.png'] },
+            { id: 'product-15', name: '트리오틱스', image: '/90001861/images/product_15.png', details: ['/90001861/images/product_15_detail1.png', '/90001861/images/product_15_detail2.png'] },
+            { id: 'product-12', name: '프로바이오500비플러스 골드', image: '/90001861/images/product_12.png', details: ['/90001861/images/product_12_detail1.png', '/90001861/images/product_12_detail2.png'] },
+            { id: 'product-13', name: '프로바이오500골드', image: '/90001861/images/product_13.png', details: ['/90001861/images/product_13_detail1.png', '/90001861/images/product_13_detail2.png'] },
+            { id: 'product-27', name: 'BR 펩타이드', image: '/90001861/images/product_27.png', details: ['/90001861/images/product_27_detail1.png', '/90001861/images/product_27_detail2.png'] },
+            { id: 'product-11', name: '에리스아미노', image: '/90001861/images/product_11.png', details: ['/90001861/images/product_11_detail1.png', '/90001861/images/product_11_detail2.png'] },
+            { id: 'product-16', name: '아드파워 밸런스', image: '/90001861/images/product_16.png', details: ['/90001861/images/product_16_detail1.png', '/90001861/images/product_16_detail2.png'] },
+            { id: 'product-19', name: '메타파워칸 에스', image: '/90001861/images/product_19.png', details: ['/90001861/images/product_19_detail1.png', '/90001861/images/product_19_detail2.png'] },
+            { id: 'product-17', name: '살리드로', image: '/90001861/images/product_17.png', details: ['/90001861/images/product_17_detail1.png', '/90001861/images/product_17_detail2.png'] },
+            { id: 'product-18', name: '아르기닌', image: '/90001861/images/product_18.png', details: ['/90001861/images/product_18_detail1.png', '/90001861/images/product_18_detail2.png', '/90001861/images/product_18_detail3.png', '/90001861/images/product_18_detail4.png'] },
+            { id: 'product-30', name: '엽산 에프', image: '/90001861/images/product_30.png', details: ['/90001861/images/product_30_detail1.png', '/90001861/images/product_30_detail2.png', '/90001861/images/product_30_detail3.png', '/90001861/images/product_30_detail4.png'] },
+            { id: 'product-3', name: '콜라겐', image: '/90001861/images/product_3.png', details: ['/90001861/images/product_3_detail1.png', '/90001861/images/product_3_detail2.png', '/90001861/images/product_3_detail3.png', '/90001861/images/product_3_detail4.png'] },
+            { id: 'product-4', name: '파워든 플러스', image: '/90001861/images/product_4.png', details: ['/90001861/images/product_4_detail1.png', '/90001861/images/product_4_detail2.png', details: ['/90001861/images/product_4_detail3.png'], details: ['/90001861/images/product_4_detail4.png' },
+            { id: 'product-6', name: '엘고이지 프로테우스', image: '/90001861/images/product_6.png', details: ['/90001861/images/product_6_detail1.png', '/90001861/images/product_6_detail2.png', '/90001861/images/product_6_detail3.png', '/90001861/images/product_6_detail4.png'] },
+            { id: 'product-7', name: '케토 글루포터', image: '/90001861/images/product_7.png', details: ['/90001861/images/product_7_detail1.png', '/90001861/images/product_7_detail2.png', '/90001861/images/product_7_detail3.png', '/90001861/images/product_7_detail4.png'] },
+            { id: 'product-8', name: '조인트 MSM', image: '/90001861/images/product_8.png', details: ['/90001861/images/product_8_detail1.png', '/90001861/images/product_8_detail2.png'] },
+            { id: 'product-10', name: '화이버', image: '/90001861/images/product_10.png', details: ['/90001861/images/product_10_detail1.png', '/90001861/images/product_10_detail2.png'] },
+            { id: 'product-1', name: '비타민D 5000IU', image: '/90001861/images/product_1.png', details: ['/90001861/images/product_1_detail1.png', '/90001861/images/product_1_detail2.png'] },
+            { id: 'product-2', name: '요오드S', image: '/90001861/images/product_2.png', details: ['/90001861/images/product_2_detail1.png', '/90001861/images/product_2_detail2.png'] },
+            { id: 'product-34', name: '[소포장] 엘고이지 10캡슐x10EA', image: '/90001861/images/product_34.png', details: ['/90001861/images/product_34_detail1.png', '/90001861/images/product_34_detail2.png', '/90001861/images/product_34_detail3.png'], '/90001861/images/product_34_detail4.png']] },
+            { id: 'product-35', name: '[소포장] GLA 40 6캡슐x10EA', image: '/90001861/images/product_35.png', details: ['/90001861/images/product_35_detail1.png', '/90001861/images/product_35_detail2.png', '/90001861/images/product_35_detail3.png', '/90001861/images/product_35_detail4.png'] },
+            { id: 'product-36', name: '[소포장] 조인트MSM 10캡슐x10EA', image: '/90001861/images/product_36.png', details: ['/90001861/images/product_36_detail1.png', '/90001861/images/product_36_detail2.png'] }
         ];
+
 
         function generateProductCards() {
             const container = document.getElementById('product-container');
             container.innerHTML = '';
-
             products.forEach(product => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <img src="${product.image}" alt="제품 이미지">
-                    <div>
-                        <p>${product.name}</p>
-                        <input type="number" id="${product.id}" min="0" placeholder="수량">
-                    </div>
+                    <img src="${product.image}" alt="${product.name}" onclick="showProductDetails('${product.id}')">
+                    <p>${product.name}</p>
+                    <input type="number" id="${product.id}" min="0" placeholder="수량">
                 `;
                 container.appendChild(card);
             });
@@ -331,7 +230,7 @@
             let hasOrder = false;
 
             products.forEach(product => {
-                const quantity = document.getElementById(product.id).value;
+                const quantity = document.getElementById(product.id)?.value || 0;
                 if (quantity > 0) {
                     hasOrder = true;
                     const row = `<tr><td>${product.name}</td><td>${quantity}</td></tr>`;
@@ -362,25 +261,25 @@
             window.location.href = smsLink;
         }
 
-        function copyTableToClipboard() {
-            const table = document.getElementById('order-table');
-            let text = '제품명\t수량\n';
+        function showProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
 
-            for (let i = 0; i < table.rows.length; i++) {
-                const row = table.rows[i];
-                const productName = row.cells[0].innerText;
-                const quantity = row.cells[1].innerText;
-                text += `${productName}\t${quantity}\n`;
-            }
-
-            navigator.clipboard.writeText(text).then(() => {
-                alert('주문 내역이 복사되었습니다.');
-            }).catch(err => {
-                console.error('복사 실패:', err);
+            const modal = document.getElementById('product-modal');
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `<h3>${product.name}</h3>`;
+            product.details.forEach(detailImage => {
+                const img = document.createElement('img');
+                img.src = detailImage;
+                modalContent.appendChild(img);
             });
+            modal.style.display = 'flex';
         }
 
-        // Initialize Product Cards on Page Load
+        function closeModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
         window.onload = generateProductCards;
     </script>
 

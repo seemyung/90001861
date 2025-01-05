@@ -437,7 +437,10 @@ function closeModal() {
         const modal = document.getElementById('product-modal');
         const modalContent = document.getElementById('modal-content');
 
-        modalContent.innerHTML = `<h3>${product.name}</h3>`;
+        modalContent.innerHTML = `
+        <button class="close-button" onclick="closeModal()">닫기</button> <!-- 닫기 버튼 추가 -->
+        <h3>${product.name}</h3>
+    `;
         product.details.forEach(detailImage => {
             const img = document.createElement('img');
             img.src = detailImage;

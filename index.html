@@ -368,19 +368,20 @@
             { id: 'product-36', name: '[소포장] 조인트MSM 10캡슐x10EA', image: '/90001861/images/product_36.png', details: ['/90001861/images/product_36_detail1.png', '/90001861/images/product_36_detail2.png'] }
         ];
 
-        function generateProductCards() {
-            const container = document.getElementById('product-container');
-            container.innerHTML = '';
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" onclick="showProductDetails('${product.id}')">
-                    <p>${product.name}</p>
-                `;
-                container.appendChild(card);
-            });
-        }
+         function generateProductCards() {
+        const container = document.getElementById('product-container');
+        container.innerHTML = '';
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" onclick="showProductDetails('${product.id}')">
+                <p>${product.name}</p>
+                <input type="number" id="${product.id}" min="0" placeholder="수량">
+            `;
+            container.appendChild(card);
+        });
+    }
 
         function showProductDetails(productId) {
             const product = products.find(p => p.id === productId);

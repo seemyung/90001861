@@ -233,6 +233,24 @@
                 overflow-x: scroll;
             }
         }
+        .close-button {
+    position: absolute; /* 모달 내부에서 고정된 위치 */
+    top: 10px; /* 위쪽 간격 */
+    right: 10px; /* 오른쪽 간격 */
+    background-color: #ff5b5b; /* 빨간 배경 */
+    color: white; /* 흰색 텍스트 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 15px; /* 여백 추가 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 클릭 가능한 포인터 표시 */
+    font-size: 14px; /* 텍스트 크기 */
+    z-index: 1001; /* 모달 내부에서 최상위 요소로 설정 */
+}
+
+.close-button:hover {
+    background-color: #d9534f; /* 호버 시 어두운 빨간색 */
+}
+
     </style>
 </head>
 <body>
@@ -267,9 +285,9 @@
         <button class="action-button" onclick="sendSMS()">담당자에게 주문서 전송</button>
     </div>
 
-<div id="product-modal" class="modal">
+<div id="product-modal" class="modal" onclick="closeModal()">
     <div id="modal-content" class="modal-content">
-<button class="close-button" onclick="closeModal()">닫기</button>
+        <button class="close-button" onclick="closeModal()">닫기</button>
         <!-- 상세 이미지 추가 -->
     </div>
 </div>
@@ -387,6 +405,10 @@
                 console.error('복사 실패:', err);
             });
         }
+function closeModal() {
+    const modal = document.getElementById('product-modal'); // 모달 요소 가져오기
+    modal.style.display = 'none'; // 모달을 숨김
+}
 
         // Initialize Product Cards on Page Load
         window.onload = generateProductCards;

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -259,70 +260,7 @@
 
     <div class="instructions">[사용방법] <br>
         제품수량입력 → 주문내역확인 → 담당자에게 주문서전송 → 문자보내기</div>
-    <script>
-(function(){
-  const track = document.getElementById('carouselTrack');
-  if(!track) return;
-
-  const slides = Array.from(track.children);
-  const prevBtn = document.getElementById('carouselPrev');
-  const nextBtn = document.getElementById('carouselNext');
-  const dotsWrap = document.getElementById('carouselDots');
-
-  // 점(인디케이터) 생성
-  slides.forEach((_,i)=>{
-    const b=document.createElement('button');
-    b.setAttribute('aria-label', `${i+1}번 슬라이드`);
-    b.addEventListener('click', ()=>go(i));
-    dotsWrap.appendChild(b);
-  });
-
-  // 접속 시 첫 이미지 랜덤 시작
-  let idx = Math.floor(Math.random() * slides.length);
-
-  function update(){
-    Array.from(dotsWrap.children).forEach((d,i)=>{
-      d.classList.toggle('active', i===idx);
-    });
-  }
-
-  function go(i){
-    idx = (i + slides.length) % slides.length;
-    const x = slides[idx].offsetLeft;
-    track.scrollTo({ left:x, behavior:'smooth' });
-    update();
-  }
-
-  prevBtn.addEventListener('click', ()=>go(idx-1));
-  nextBtn.addEventListener('click', ()=>go(idx+1));
-
-  // 스크롤 시 인덱스 동기화
-  let ticking = false;
-  track.addEventListener('scroll', ()=>{
-    if(!ticking){
-      window.requestAnimationFrame(()=>{
-        const scrollLeft = track.scrollLeft;
-        let nearest = 0, min = Infinity;
-        slides.forEach((s,i)=>{
-          const diff = Math.abs(s.offsetLeft - scrollLeft);
-          if(diff < min){ min = diff; nearest = i; }
-        });
-        idx = nearest;
-        update();
-        ticking=false;
-      });
-      ticking=true;
-    }
-  });
-
-  // 초기 표시(랜덤 시작 위치로 이동)
-  setTimeout(()=>go(idx), 100);
-  update();
-
-  // 자동재생 (5초 간격, 필요 시 시간 변경)
-  setInterval(()=>go(idx+1), 5000);
-})();
-</script>
+    <img src="/90001861/image.png" alt="아침편지" style="width:100%; max-width:400px; display:block; margin:auto;">
 
     <div class="instructions"> [신제품] 엘스케이뮨 입고. 출하 가능합니다.</div>
     
@@ -530,7 +468,6 @@ function closeModal() {
 
 </body>
 </html>
-
 
 
 
